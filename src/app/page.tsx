@@ -7,10 +7,12 @@ import { MachineSelector } from "@/components/MachineSelector";
 import { WorkParameters } from "@/components/WorkParameters";
 import { TechnicalSummary } from "@/components/TechnicalSummary";
 import { HistoryView } from "@/components/HistoryView";
+import { Toast } from "@/components/Toast";
 import { useFuelCalculator, MixedHours } from "@/hooks/useFuelCalculator";
 import { useHistory } from "@/hooks/useHistory";
 import { MaterialClassification, MachineModel } from "@/lib/types";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   const [selectedMachine, setSelectedMachine] = useState<MachineModel | null>(
@@ -23,6 +25,8 @@ export default function Home() {
   const [workHours, setWorkHours] = useState<number>(1);
   const [pricePerGallon, setPricePerGallon] = useState<number>(14.0);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
 
   const [mixedHours, setMixedHours] = useState<MixedHours>({
     [MaterialClassification.EXCELENTE]: 0,
@@ -49,7 +53,8 @@ export default function Home() {
   const handleSave = () => {
     if (selectedMachine && calculationResult) {
       addToHistory(selectedMachine, calculationResult);
-      // Optional: Show toast or feedback
+      setToastMessage("Cálculo guardado en el historial");
+      setShowToast(true);
     }
   };
 
@@ -97,8 +102,20 @@ export default function Home() {
         </div>
 
         {/* Desktop Bento Grid Layout */}
-        <div className="hidden md:grid grid-cols-12 gap-6 items-start">
-          <div className="col-span-8 space-y-6">
+        <div
+          className={cn(
+            "hidden md:grid gap-6 items-start transition-all duration-500 ease-in-out",
+            selectedMachine ? "grid-cols-12" : "grid-cols-1",
+          )}
+        >
+          <div
+            className={cn(
+              "space-y-6 transition-all duration-500",
+              selectedMachine
+                ? "col-span-8"
+                : "col-span-1 max-w-2xl mx-auto w-full mt-20",
+            )}
+          >
             <MachineSelector
               selectedMachine={selectedMachine}
               onSelect={setSelectedMachine}
@@ -121,8 +138,8 @@ export default function Home() {
             )}
           </div>
 
-          <div className="col-span-4 h-full">
-            {selectedMachine && (
+          {selectedMachine && (
+            <div className="col-span-4 h-full animate-fade-in">
               <div className="sticky top-6 h-[600px]">
                 <TechnicalSummary
                   result={calculationResult}
@@ -130,8 +147,8 @@ export default function Home() {
                   onSave={handleSave}
                 />
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </main>
 
@@ -142,6 +159,12 @@ export default function Home() {
         onClose={() => setIsHistoryOpen(false)}
         history={history}
         onClear={clearHistory}
+      />
+
+      <Toast
+        message={toastMessage}
+        isVisible={showToast}
+        onClose={() => setShowToast(false)}
       />
 
       {/* Desktop History Toggle */}

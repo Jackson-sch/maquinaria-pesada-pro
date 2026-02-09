@@ -86,7 +86,7 @@ export function WorkParameters({
             <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest pl-1">
               Clasificación de Material
             </label>
-            <div className="space-y-2">
+            <div className="flex flex-col-3 gap-3">
               {Object.values(MaterialClassification).map((cat) => (
                 <button
                   key={cat}
@@ -95,7 +95,7 @@ export function WorkParameters({
                     "w-full p-4 rounded-2xl flex justify-between items-center transition-all border-2 group",
                     materialType === cat
                       ? "bg-white border-amber-500 shadow-lg shadow-amber-500/10"
-                      : "bg-gray-50 border-transparent hover:bg-gray-100",
+                      : "bg-gray-100 border-transparent hover:bg-gray-200",
                   )}
                 >
                   <div className="text-left">
@@ -104,7 +104,7 @@ export function WorkParameters({
                         "block text-xs font-black uppercase transition-colors",
                         materialType === cat
                           ? "text-slate-900"
-                          : "text-gray-400",
+                          : "text-gray-900",
                       )}
                     >
                       {cat}

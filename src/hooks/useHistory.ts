@@ -25,7 +25,7 @@ export function useHistory() {
 
   const addToHistory = (machine: MachineModel, result: CalculationResult) => {
     const newItem: HistoryItem = {
-      id: crypto.randomUUID(),
+      id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2) + Date.now().toString(36),
       timestamp: Date.now(),
       machine,
       result

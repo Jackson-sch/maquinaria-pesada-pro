@@ -29,16 +29,16 @@ export function MachineSelector({
   }, [searchTerm, selectedMachine]);
 
   return (
-    <section className="bg-white rounded-xl shadow-lg p-6 border-l-8 border-amber-500">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-lg font-black uppercase flex items-center gap-2 text-slate-900">
+    <section className="bg-white rounded-3xl shadow-xl p-6 relative overflow-visible z-30">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-black uppercase flex items-center gap-2 text-slate-800">
           <Search className="w-5 h-5 text-amber-500" />
           1. Selección de Equipo
         </h2>
         {selectedMachine && (
           <button
             onClick={() => onSelect(null)}
-            className="text-[10px] font-bold text-rose-500 uppercase hover:underline transition-all"
+            className="text-[10px] font-black text-rose-500 uppercase hover:text-rose-600 tracking-wider"
           >
             Cambiar Equipo
           </button>
@@ -51,7 +51,7 @@ export function MachineSelector({
             <input
               type="text"
               placeholder="Busca el modelo (ej. BL 70, WA480...)"
-              className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-lg focus:border-amber-500 outline-none font-bold text-slate-800 transition-all"
+              className="w-full p-4 pl-5 bg-gray-50 border-2 border-transparent rounded-2xl focus:border-amber-500 focus:bg-white outline-none font-bold text-slate-800 transition-all shadow-inner"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onFocus={() => setIsFocused(true)}
@@ -60,26 +60,26 @@ export function MachineSelector({
             <AnimatePresence>
               {isFocused && filteredMachines.length > 0 && (
                 <motion.div
-                  initial={{ opacity: 0, y: -5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -5 }}
-                  className="absolute z-50 w-full mt-2 bg-white border border-gray-200 rounded-lg shadow-2xl overflow-hidden"
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="absolute z-50 w-full mt-4 bg-white border border-gray-100 rounded-2xl shadow-2xl p-2"
                 >
                   {filteredMachines.map((machine) => (
                     <button
                       key={machine.id}
                       onClick={() => onSelect(machine)}
-                      className="w-full p-4 text-left hover:bg-amber-50 flex justify-between items-center border-b border-gray-50 last:border-0 transition-colors"
+                      className="w-full p-3 text-left hover:bg-amber-50 rounded-xl flex justify-between items-center transition-colors mb-1 last:mb-0"
                     >
                       <div>
-                        <span className="font-black text-slate-900">
+                        <span className="font-black text-slate-900 block">
                           {machine.model}
                         </span>
-                        <span className="text-[10px] text-slate-400 font-bold ml-2 uppercase">
-                          ({machine.category})
+                        <span className="text-[10px] text-gray-400 font-bold uppercase">
+                          {machine.category}
                         </span>
                       </div>
-                      <span className="font-mono text-sm font-bold text-slate-600">
+                      <span className="font-mono text-xs font-black text-amber-500 bg-amber-50 px-2 py-1 rounded-md">
                         {machine.hp} HP
                       </span>
                     </button>
@@ -89,18 +89,23 @@ export function MachineSelector({
             </AnimatePresence>
           </>
         ) : (
-          <div className="bg-slate-900 text-white p-5 rounded-lg flex justify-between items-center shadow-inner">
+          <div className="bg-slate-900 text-white p-6 rounded-2xl flex justify-between items-center shadow-lg shadow-slate-900/30">
             <div>
-              <p className="text-amber-500 text-[10px] font-black uppercase tracking-widest mb-1">
+              <p className="text-amber-500 text-[9px] font-black uppercase tracking-[0.2em] mb-2">
                 Equipo Seleccionado
               </p>
-              <h3 className="text-2xl font-black">{selectedMachine.model}</h3>
-              <p className="text-[10px] uppercase font-bold text-slate-400 mt-1">
-                {selectedMachine.category} | {selectedMachine.type} |{" "}
-                {selectedMachine.hp} HP
+              <h3 className="text-3xl font-black leading-none mb-1">
+                {selectedMachine.model}
+              </h3>
+              <p className="text-[10px] uppercase font-bold text-gray-500 flex items-center gap-2">
+                {selectedMachine.category}{" "}
+                <span className="w-1 h-1 bg-gray-700 rounded-full" />{" "}
+                {selectedMachine.type}
               </p>
             </div>
-            <CheckCircle2 className="w-10 h-10 text-emerald-400" />
+            <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+              <CheckCircle2 className="w-6 h-6 text-emerald-500" />
+            </div>
           </div>
         )}
       </div>

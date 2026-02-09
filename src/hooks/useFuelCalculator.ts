@@ -1,5 +1,5 @@
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { MaterialClassification, MachineModel, CalculationResult, MixedCalculationBreakdown } from '../lib/types';
 import { LOAD_FACTORS } from '../lib/constants';
 

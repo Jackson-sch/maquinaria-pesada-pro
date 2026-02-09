@@ -36,7 +36,7 @@ export function WorkParameters({
 }: WorkParametersProps) {
   return (
     <section className="bg-white rounded-3xl shadow-xl p-6 space-y-6 relative overflow-hidden">
-      <div className="flex justify-between items-center mb-2">
+      <div className="flex flex-col md:flex-row justify-between mb-2 gap-3">
         <h2 className="text-lg font-black uppercase flex items-center gap-3 text-slate-800">
           <Settings2 className="w-6 h-6 text-amber-500" />
           <span className="leading-tight">
@@ -46,7 +46,7 @@ export function WorkParameters({
           </span>
         </h2>
 
-        <div className="flex items-center gap-2 bg-gray-50 p-1.5 rounded-full border border-gray-100">
+        <div className="flex justify-center items-center gap-2 lg:bg-gray-100 p-1.5 lg:rounded-full lg:border lg:border-gray-100">
           <span
             className={cn(
               "text-[10px] font-black px-2 uppercase",

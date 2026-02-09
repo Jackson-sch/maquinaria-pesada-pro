@@ -1,65 +1,99 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { Header } from "@/components/Header";
+import { MachineSelector } from "@/components/MachineSelector";
+import { WorkParameters } from "@/components/WorkParameters";
+import { TechnicalSummary } from "@/components/TechnicalSummary";
+import { useFuelCalculator, MixedHours } from "@/hooks/useFuelCalculator";
+import { MaterialClassification, MachineModel } from "@/lib/types";
+import { motion } from "framer-motion";
 
 export default function Home() {
+  const [selectedMachine, setSelectedMachine] = useState<MachineModel | null>(
+    null,
+  );
+  const [isMixedMode, setIsMixedMode] = useState(false);
+  const [materialType, setMaterialType] = useState<MaterialClassification>(
+    MaterialClassification.PROMEDIO,
+  );
+  const [workHours, setWorkHours] = useState<number>(1);
+  const [pricePerGallon, setPricePerGallon] = useState<number>(14.0);
+
+  const [mixedHours, setMixedHours] = useState<MixedHours>({
+    [MaterialClassification.EXCELENTE]: 0,
+    [MaterialClassification.PROMEDIO]: 0,
+    [MaterialClassification.SEVERO]: 0,
+  });
+
+  const calculationResult = useFuelCalculator(
+    selectedMachine,
+    isMixedMode,
+    materialType,
+    workHours,
+    mixedHours,
+    pricePerGallon,
+  );
+
+  const handleMixedHourChange = (cat: MaterialClassification, val: string) => {
+    const num = parseFloat(val) || 0;
+    setMixedHours((prev) => ({ ...prev, [cat]: num }));
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="min-h-screen bg-bg-dark text-text-main pb-20 selection:bg-amber-500/30">
+      <Header />
+
+      <main className="max-w-6xl mx-auto px-4 md:px-6 mt-12 space-y-12">
+        <MachineSelector
+          selectedMachine={selectedMachine}
+          onSelect={setSelectedMachine}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {selectedMachine && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+            <div className="lg:col-span-2">
+              <WorkParameters
+                selectedMachine={selectedMachine}
+                isMixedMode={isMixedMode}
+                setIsMixedMode={setIsMixedMode}
+                materialType={materialType}
+                setMaterialType={setMaterialType}
+                workHours={workHours}
+                setWorkHours={setWorkHours}
+                mixedHours={mixedHours}
+                onMixedHourChange={handleMixedHourChange}
+                pricePerGallon={pricePerGallon}
+                setPricePerGallon={setPricePerGallon}
+              />
+            </div>
+
+            <div className="lg:col-span-1">
+              <TechnicalSummary
+                result={calculationResult}
+                isMixedMode={isMixedMode}
+              />
+            </div>
+          </motion.div>
+        )}
       </main>
+
+      <footer className="mt-20 border-t border-white/5 py-12">
+        <div className="max-w-5xl mx-auto px-6 text-center space-y-4">
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-600">
+            Redondeo Técnico Estándar Aplicado
+          </p>
+          <div className="flex justify-center gap-8 opacity-20">
+            <div className="w-12 h-1 bg-slate-700 rounded-full" />
+            <div className="w-12 h-1 bg-amber-500 rounded-full" />
+            <div className="w-12 h-1 bg-slate-700 rounded-full" />
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

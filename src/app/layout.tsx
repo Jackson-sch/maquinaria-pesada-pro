@@ -25,9 +25,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen`}
       >
-        {children}
+        {/* Watermark */}
+        <div className="fixed inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden opacity-[0.03] select-none">
+          <div className="w-[200%] h-[200%] flex flex-wrap content-center justify-center gap-12 -rotate-12">
+            {Array.from({ length: 100 }).map((_, i) => (
+              <span
+                key={i}
+                className="text-4xl font-black uppercase text-black whitespace-nowrap"
+              >
+                Jackson Sebastian
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative z-10">{children}</div>
       </body>
     </html>
   );

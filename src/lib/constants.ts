@@ -14,6 +14,19 @@ export const LOAD_FACTORS = {
   }
 };
 
+export const MATERIAL_DESCRIPTIONS = {
+  [MachineType.NEUMATICO]: {
+    Excelente: "tierra suelta, arena, agregados, escoria, relaves, arcilla suelta, etc",
+    Promedio: "tierra con rocas, arena con rocas, agregados con piedras, arcilla con roca, etc",
+    Severo: "roca de voladura bancos para rellenos de cimentación, desmonte de concreto"
+  },
+  [MachineType.ORUGA]: {
+    Excelente: "tierra suelta, arena, agregados, escoria, relaves, arcilla suelta, etc",
+    Promedio: "tierra con rocas, arena con rocas, agregados con piedras, arcilla con roca, etc",
+    Severo: "roca de voladura bancos para rellenos de cimentación, desmonte de concreto"
+  }
+};
+
 export const MACHINERY_DATA: MachineModel[] = [
   { id: '1', category: 'Cargador Frontal', model: 'WA150PZ-6', hp: 98, type: MachineType.NEUMATICO },
   { id: '2', category: 'Cargador Frontal', model: 'WA200PZ-6', hp: 127, type: MachineType.NEUMATICO },

@@ -3,7 +3,7 @@
 import { Info, Settings2, Edit3 } from "lucide-react";
 import { MaterialClassification } from "@/lib/types";
 import { MixedHours } from "@/hooks/useFuelCalculator";
-import { LOAD_FACTORS } from "@/lib/constants";
+import { LOAD_FACTORS, MATERIAL_DESCRIPTIONS } from "@/lib/constants";
 import { MachineModel } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -81,12 +81,12 @@ export function WorkParameters({
       </div>
 
       {!isMixedMode ? (
-        <div className="space-y-6 animate-fade-in">
+        <div className="space-y-6 gap-3 animate-fade-in">
           <div className="space-y-3">
             <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest pl-1">
               Clasificación de Material
             </label>
-            <div className="flex flex-col-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {Object.values(MaterialClassification).map((cat) => (
                 <button
                   key={cat}
@@ -95,27 +95,32 @@ export function WorkParameters({
                     "w-full p-4 rounded-2xl flex justify-between items-center transition-all border-2 group",
                     materialType === cat
                       ? "bg-white border-amber-500 shadow-lg shadow-amber-500/10"
-                      : "bg-gray-100 border-transparent hover:bg-gray-200",
+                      : "bg-gray-100 border-transparent hover:bg-gray-100",
                   )}
                 >
-                  <div className="text-left">
-                    <span
-                      className={cn(
-                        "block text-xs font-black uppercase transition-colors",
-                        materialType === cat
-                          ? "text-slate-900"
-                          : "text-gray-900",
-                      )}
-                    >
-                      {cat}
-                    </span>
-                    <span className="text-[10px] font-bold text-gray-400 uppercase">
-                      Factor:{" "}
-                      {LOAD_FACTORS[selectedMachine.type][cat].toFixed(2)}
-                    </span>
+                  <div className="text-left w-full pr-4">
+                    <div className="flex justify-between items-center w-full mb-1">
+                      <span
+                        className={cn(
+                          "block text-xs font-black uppercase transition-colors",
+                          materialType === cat
+                            ? "text-slate-900"
+                            : "text-gray-900",
+                        )}
+                      >
+                        {cat}
+                      </span>
+                      <span className="text-[10px] font-bold text-gray-400 uppercase">
+                        Factor:{" "}
+                        {LOAD_FACTORS[selectedMachine.type][cat].toFixed(2)}
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-gray-500 font-medium leading-tight text-left">
+                      {MATERIAL_DESCRIPTIONS[selectedMachine.type][cat]}
+                    </p>
                   </div>
                   {materialType === cat && (
-                    <div className="w-3 h-3 rounded-full bg-amber-500" />
+                    <div className="w-3 h-3 shrink-0 rounded-full bg-amber-500" />
                   )}
                 </button>
               ))}
@@ -157,43 +162,48 @@ export function WorkParameters({
                 <div
                   key={cat}
                   className={cn(
-                    "flex items-center justify-between p-4 rounded-2xl border-2 transition-all",
+                    "flex flex-col p-4 rounded-2xl border-2 transition-all gap-3",
                     isActive
                       ? "bg-white border-amber-400 shadow-md"
                       : "bg-white border-gray-100",
                   )}
                 >
-                  <div>
-                    <span
-                      className={cn(
-                        "text-xs font-black uppercase block mb-1",
-                        isActive ? "text-amber-500" : "text-gray-400",
-                      )}
-                    >
-                      {cat}
-                    </span>
-                    <span className="text-[10px] text-gray-300 font-black uppercase tracking-wider">
-                      Factor:{" "}
-                      {LOAD_FACTORS[selectedMachine.type][cat].toFixed(2)}
-                    </span>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <span
+                        className={cn(
+                          "text-xs font-black uppercase block mb-1",
+                          isActive ? "text-amber-500" : "text-gray-400",
+                        )}
+                      >
+                        {cat}
+                      </span>
+                      <span className="text-[10px] text-gray-300 font-black uppercase tracking-wider">
+                        Factor:{" "}
+                        {LOAD_FACTORS[selectedMachine.type][cat].toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-black text-gray-300 uppercase mr-1">
+                        HRS
+                      </span>
+                      <input
+                        type="number"
+                        placeholder="0"
+                        className={cn(
+                          "w-16 h-10 text-center rounded-lg font-black text-lg outline-none transition-all",
+                          isActive
+                            ? "bg-slate-900 text-white"
+                            : "bg-gray-100 text-gray-400",
+                        )}
+                        value={mixedHours[cat] || ""}
+                        onChange={(e) => onMixedHourChange(cat, e.target.value)}
+                      />
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-black text-gray-300 uppercase mr-1">
-                      HRS
-                    </span>
-                    <input
-                      type="number"
-                      placeholder="0"
-                      className={cn(
-                        "w-16 h-10 text-center rounded-lg font-black text-lg outline-none transition-all",
-                        isActive
-                          ? "bg-slate-900 text-white"
-                          : "bg-gray-100 text-gray-400",
-                      )}
-                      value={mixedHours[cat] || ""}
-                      onChange={(e) => onMixedHourChange(cat, e.target.value)}
-                    />
-                  </div>
+                  <p className="text-[10px] text-gray-400 font-medium leading-tight">
+                    {MATERIAL_DESCRIPTIONS[selectedMachine.type][cat]}
+                  </p>
                 </div>
               );
             })}

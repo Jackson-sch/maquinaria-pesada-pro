@@ -13,6 +13,7 @@ import { useHistory } from "@/hooks/useHistory";
 import { MaterialClassification, MachineModel } from "@/lib/types";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { InstallPrompt } from "@/components/InstallPrompt";
 
 export default function Home() {
   const [selectedMachine, setSelectedMachine] = useState<MachineModel | null>(

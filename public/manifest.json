@@ -1,0 +1,16 @@
+{
+  "name": "Maquinaria Pro",
+  "short_name": "Maquinaria",
+  "description": "Calculadora de rendimiento y combustible para maquinaria pesada",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f59e0b",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

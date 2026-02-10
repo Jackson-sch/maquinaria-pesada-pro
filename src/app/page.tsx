@@ -60,7 +60,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100/50 pb-32 md:pb-10">
+    <div className="min-h-screen bg-gray-100/50 pb-24 md:pb-10">
       <Header />
 
       <main className="px-4 -mt-10 md:mt-8 relative z-20 space-y-6 max-w-md md:max-w-7xl mx-auto">
@@ -97,6 +97,19 @@ export default function Home() {
                   isMixedMode={isMixedMode}
                   onSave={handleSave}
                 />
+
+                <div className="mt-8 text-center opacity-80 hover:opacity-100 transition-all duration-300 cursor-default">
+                  <p className="text-[10px] uppercase font-black tracking-widest text-slate-400 flex items-center justify-center gap-2">
+                    Hecho con{" "}
+                    <span className="text-red-500 text-xs animate-bounce">
+                      ♥️
+                    </span>{" "}
+                    por Webby
+                  </p>
+                  <p className="text-[9px] text-slate-400 mt-1 font-medium">
+                    (Funciona con diésel y mucho café ☕)
+                  </p>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -147,6 +160,19 @@ export default function Home() {
                   isMixedMode={isMixedMode}
                   onSave={handleSave}
                 />
+
+                <div className="mt-8 text-center pb-8 opacity-80 hover:opacity-100 transition-all duration-300 cursor-default">
+                  <p className="text-[10px] uppercase font-black tracking-widest text-slate-400 flex items-center justify-center gap-2">
+                    Hecho con{" "}
+                    <span className="text-red-500 text-xs animate-bounce">
+                      ♥️
+                    </span>{" "}
+                    por Webby
+                  </p>
+                  <p className="text-[9px] text-slate-400 mt-1 font-medium">
+                    (Funciona con diésel y mucho café ☕)
+                  </p>
+                </div>
               </div>
             </div>
           )}

@@ -24,7 +24,8 @@ export function MachineSelector({
     return MACHINERY_DATA.filter(
       (m) =>
         m.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        m.category.toLowerCase().includes(searchTerm.toLowerCase()),
+        m.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        m.brand.toLowerCase().includes(searchTerm.toLowerCase()),
     ).slice(0, 5);
   }, [searchTerm, selectedMachine]);
 
@@ -72,9 +73,14 @@ export function MachineSelector({
                       className="w-full p-3 text-left hover:bg-amber-50 rounded-xl flex justify-between items-center transition-colors mb-1 last:mb-0"
                     >
                       <div>
-                        <span className="font-black text-slate-900 block">
-                          {machine.model}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-black text-amber-600 bg-amber-100/50 px-1.5 py-0.5 rounded uppercase tracking-wider">
+                            {machine.brand}
+                          </span>
+                          <span className="font-black text-slate-900 block">
+                            {machine.model}
+                          </span>
+                        </div>
                         <span className="text-[10px] text-gray-400 font-bold uppercase">
                           {machine.category}
                         </span>
@@ -94,7 +100,10 @@ export function MachineSelector({
               <p className="text-amber-500 text-[9px] font-black uppercase tracking-[0.2em] mb-2">
                 Equipo Seleccionado
               </p>
-              <h3 className="text-3xl font-black leading-none mb-1">
+              <h3 className="text-3xl font-black leading-none mb-1 flex items-baseline gap-2">
+                <span className="text-sm text-amber-500/80 uppercase tracking-widest">
+                  {selectedMachine.brand}
+                </span>
                 {selectedMachine.model}
               </h3>
               <p className="text-[10px] uppercase font-bold text-gray-500 flex items-center gap-2">

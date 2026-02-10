@@ -16,7 +16,17 @@ export interface MachineModel {
   model: string;
   hp: number;
   type: MachineType;
+  brand:
+    | 'CATERPILLAR'
+    | 'KOMATSU'
+    | 'VOLVO'
+    | 'JOHN_DEERE'
+    | 'HYUNDAI'
+    | 'DOOSAN'
+    | 'JCB';
 }
+
+
 
 export interface CalculationResult {
   hpNominal: number;

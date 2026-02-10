@@ -63,10 +63,16 @@ export function HistoryView({
                   >
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <p className="font-black text-slate-900 uppercase text-sm">
-                          {item.machine.model}
-                        </p>
-                        <p className="text-[10px] text-gray-500 font-bold uppercase">
+                        <div className="flex items-center gap-1.5 mb-0.5">
+                          <span className="text-[8px] font-black text-amber-600 bg-amber-100 px-1 py-0.5 rounded uppercase tracking-wider">
+                            {item.machine.brand}
+                          </span>
+                          <p className="font-black text-slate-900 uppercase text-xs">
+                            {item.machine.model}
+                          </p>
+                        </div>
+                        <p className="text-[9px] text-gray-400 font-bold uppercase flex items-center gap-1">
+                          <Clock className="w-2.5 h-2.5" />
                           {new Date(item.timestamp).toLocaleString()}
                         </p>
                       </div>

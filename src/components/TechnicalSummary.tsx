@@ -15,6 +15,7 @@ export function TechnicalSummary({
   isMixedMode,
   onSave,
 }: TechnicalSummaryProps) {
+  console.log("🚀 ~ TechnicalSummary ~ result:", result)
   return (
     <section className="bg-slate-900 rounded-3xl shadow-xl overflow-hidden text-white relative h-full flex flex-col">
       <div className="p-6 pb-40 flex-grow">
@@ -44,6 +45,15 @@ export function TechnicalSummary({
               animate={{ opacity: 1 }}
               className="space-y-6"
             >
+              <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                <span className="text-[11px] font-black uppercase text-gray-500 tracking-wider">
+                  Hp Nominal
+                </span>
+                <span className="text-xl font-black">
+                  {result.hpNominal.toFixed(1)}{" "}
+                  <span className="text-xs text-gray-500 font-bold">HP</span>
+                </span>
+              </div>
               <div className="flex justify-between items-center border-b border-white/10 pb-4">
                 <span className="text-[11px] font-black uppercase text-gray-500 tracking-wider">
                   Hp al Freno (+15%)

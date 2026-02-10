@@ -95,13 +95,13 @@ export function MachineSelector({
             </AnimatePresence>
           </>
         ) : (
-          <div className="bg-slate-900 text-white p-6 rounded-2xl flex justify-between items-center shadow-lg shadow-slate-900/30">
+          <div className="bg-slate-900 text-white p-4 rounded-2xl flex justify-between items-center shadow-lg shadow-slate-900/30">
             <div>
               <p className="text-amber-500 text-[9px] font-black uppercase tracking-[0.2em] mb-2">
                 Equipo Seleccionado
               </p>
-              <h3 className="text-3xl font-black leading-none mb-1 flex items-baseline gap-2">
-                <span className="text-sm text-amber-500/80 uppercase tracking-widest">
+              <h3 className="text-2xl font-black leading-none mb-1 flex items-baseline gap-2">
+                <span className="text-xs text-amber-500/80 uppercase tracking-widest">
                   {selectedMachine.brand}
                 </span>
                 {selectedMachine.model}
